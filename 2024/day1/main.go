@@ -11,6 +11,27 @@ import (
 )
 
 // type set map[int]struct{}
+// Src: gopkg
+// An IntHeap is a min-heap of ints.
+// type IntHeap []int
+
+// func (h IntHeap) Len() int           { return len(h) }
+// func (h IntHeap) Less(i, j int) bool { return h[i] < h[j] }
+// func (h IntHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+// func (h *IntHeap) Push(x any) {
+// 	// Push and Pop use pointer receivers because they modify the slice's length,
+// 	// not just its contents.
+// 	*h = append(*h, x.(int))
+// }
+
+// func (h *IntHeap) Pop() any {
+// 	old := *h
+// 	n := len(old)
+// 	x := old[n-1]
+// 	*h = old[0 : n-1]
+// 	return x
+// }
 
 func main() {
 	file, err := os.Open("./in1")
@@ -33,6 +54,7 @@ func main() {
 		first, _ := strconv.Atoi(listNums[0])
 		second, _ := strconv.Atoi(listNums[1])
 		// Rather than append then sorting the list, keep a heap maybe?
+		// On benchmarking, heap is slower than the list sort, for the example atleast
 		leftList = append(leftList, first)
 		rightList = append(rightList, second)
 
@@ -46,12 +68,8 @@ func main() {
 	}
 
 	// Part 1
-	sort.Slice(leftList, func(i, j int) bool {
-		return leftList[i] < leftList[j]
-	})
-	sort.Slice(rightList, func(i, j int) bool {
-		return rightList[i] < rightList[j]
-	})
+	sort.Ints(leftList)
+	sort.Ints(rightList)
 
 	for i := range len(leftList) {
 		distance += intAbs(leftList[i] - rightList[i])
