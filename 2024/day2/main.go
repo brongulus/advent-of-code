@@ -20,13 +20,13 @@ func main() {
 	answer := 0
 	for scanner.Scan() {
 		levels := strings.Split(scanner.Text(), " ")
-		fmt.Printf("%v ", levels)
 		// safe := isSafe(levels) // Part 1
 		safe := bruteDamp(levels) // Part 2
-		fmt.Println(safe)
 		if safe {
 			answer++
 		}
+		// fmt.Printf("%v ", levels)
+		// fmt.Println(safe)
 	}
 
 	fmt.Println(answer)
